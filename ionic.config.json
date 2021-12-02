@@ -1,0 +1,7 @@
+{
+  "name": "Book Search App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

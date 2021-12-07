@@ -1,20 +1,122 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Book Search
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <!-- Search form plus search settings -->
+  <form #f="ngForm" (ngSubmit)="search(f)" slot="fixed">
+    <ion-card style="width: 95vw;">
+      <ion-card-content>
+        <ion-item id="input-form">
+          <ion-label position="stacked">Search: </ion-label>
+          <ion-input required ngModel name="query" placeholder="Search for books"></ion-input>
+        </ion-item>
+        <div class="row">
+          <ion-button color="secondary" id="setting" (click)="toggleSettingsVisibility()">
+            Search Settings
+          </ion-button>
+        </div>
+        <ion-item [style]="settingStyle" id="setting-frame">
+          <div>
+            <ion-item>
+              <ion-radio-group ngModel name="searchType" value="regular">
+                <ion-label style="font-weight: bold;">Search By</ion-label>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label class="setting-label">Regular </ion-label>
+                        <ion-radio value="regular"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label class="setting-label">Title </ion-label>
+                        <ion-radio value="title"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label class="setting-label">Author </ion-label>
+                        <ion-radio value="author"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label class="setting-label">ISBN </ion-label>
+                        <ion-radio value="isbn"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  
+                </ion-grid>
+              </ion-radio-group>
+            </ion-item>
+            <ion-item>
+              <ion-radio-group ngModel name="searchCategory" value="book">
+                <ion-label style="font-weight: bold;">Search For</ion-label>
+                <ion-item>
+                  <ion-label class="setting-label">Book</ion-label>
+                  <ion-radio value="book"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="setting-label">Author</ion-label>
+                  <ion-radio value="author"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-item>
+          </div>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </form>
+  <!-- Content Display -->
+  <ion-card slot="fixed" style="width: 95vw; margin-top: 160px;">
+    <ion-card-content *ngIf="!settingsVisible">
+      <div class="col">
+        <ion-label *ngIf="searchReturned">{{count}} {{typeStr}} found</ion-label>
+        <ion-label *ngIf="searchReturned" class="header">Found {{typeStr}}</ion-label>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-list *ngIf="searchReturned && displayBooks" style="margin-top: 250px;">
+    <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i">
+      <div style="width: 90vw;">
+        <ion-label class="wrap title">
+          <span style="font-size: 12px; color: grey;">{{i + 1}}.</span>  {{res.title}}
+        </ion-label>
+        <ion-label class="wrap name">{{res.author_name}}</ion-label>
+        <div class="horizontal">
+          <ion-label style="flex-basis: 60vw;">{{res.first_publish_year}}</ion-label>
+          <ion-label style="font-size: 14px; color: grey; font-style: italic; text-align: end;">
+            {{res.edition_count}} edition(s) found
+          </ion-label>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="searchReturned && !displayBooks" style="margin-top: 250px;">
+    <ion-item style="width: 95vw;" *ngFor="let auth of authorResults; index as i">
+      <div style="width: 90vw;">
+        <ion-label class="wrap title">
+          <span style="font-size: 12px; color: grey;">{{i + 1}}.</span> {{auth.name}}
+        </ion-label>
+        <ion-label class="wrap title">
+          {{auth.author_name}}
+        </ion-label>
+        <ion-label *ngIf="auth.birth_date">
+          Date of Birth: {{auth.birth_date}}
+        </ion-label>
+        <ion-label *ngIf="auth.death_date">
+          Date of Death: {{auth.death_date}}
+        </ion-label>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -86,7 +86,7 @@
     </ion-card-content>
   </ion-card>
   <ion-list *ngIf="searchReturned && displayBooks" style="margin-top: 250px;">
-    <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i">
+    <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" (click)="viewBook(res)">
       <div style="width: 90vw;">
         <ion-label class="wrap title">
           <span style="font-size: 12px; color: grey;">{{i + 1}}.</span>  {{res.title}}

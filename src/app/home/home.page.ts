@@ -79,4 +79,12 @@ export class HomePage {
     else
       this.settingStyle = "visibility: hidden;  height: 0px;"
   }
+
+  viewBook(book: any): void {
+    console.log(book);
+  }
+
+  viewAuthor(author: any): void {
+    console.log(author);
+  }
 }

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NetworkingService, SearchType } from '../networking.service';
+import { HistoryService } from '../history.service';
 import { NgForm } from '@angular/forms'
+import { BookInfo } from '../Models/BookInfo';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,8 @@ export class HomePage {
   typeStr: string = "";
   bookResults: any[] = [];
   authorResults: any[] = [];
-  constructor(private network: NetworkingService) {}
+
+  constructor(private network: NetworkingService, private his: HistoryService) {}
 
   ngOnInit(): void {
     
@@ -28,6 +31,11 @@ export class HomePage {
   search(f: NgForm): void {
     if (!f.valid)
       return;
+
+    if (!this.network.isQueryGood(f.value.query)) {
+      alert("Query too short or too common.");
+      return;
+    }
 
     if (f.value.searchType === "regular") {
       this.network.searchOption = SearchType.REGULAR;
@@ -80,8 +88,8 @@ export class HomePage {
       this.settingStyle = "visibility: hidden;  height: 0px;"
   }
 
-  viewBook(book: any): void {
-    console.log(book);
+  viewBook(book: BookInfo): void {
+    this.his.setLatestHistory({ authors: book.author_name, editons: book.edition_key });
   }
 
   viewAuthor(author: any): void {

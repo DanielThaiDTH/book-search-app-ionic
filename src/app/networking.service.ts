@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookInfo } from './Models/BookInfo';
 import { AuthorInfo } from './Models/AuthorInfo';
+import { BookDetail } from './Models/BookDetail';
 
 const MAXLIMIT: number = 200;
 
@@ -109,6 +110,27 @@ export class NetworkingService {
     return this.client.get(url);
   }
 
+
+  async queryWork(key: string): Promise<BookDetail> {
+    let url: string = this.baseRoot + key + ".json";
+
+    let b = await this.client.get(url).pipe(map(obj => {
+                    let book = BookDetail.buildBookDetail(obj);
+                    console.log(book);
+                    return book;
+    })).toPromise();
+
+    if (b.isRedirect()) {
+      let redirect = b.getRedirect();
+      console.log("Redirecting to " + redirect);
+      b = await this.client.get(redirect).pipe(map(obj => {
+                      let book = BookDetail.buildBookDetail(obj);
+                      return book;
+      })).toPromise();
+    }
+
+    return b;
+  }
 
   /**
    * Must not have a '/' in the front of the key.

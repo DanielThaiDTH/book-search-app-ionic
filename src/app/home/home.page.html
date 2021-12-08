@@ -16,7 +16,7 @@
           <ion-input required ngModel name="query" placeholder="Search for books"></ion-input>
         </ion-item>
         <div class="row">
-          <ion-button color="secondary" id="setting" (click)="toggleSettingsVisibility()">
+          <ion-button color="medium" id="setting" (click)="toggleSettingsVisibility()">
             Search Settings
           </ion-button>
         </div>
@@ -86,7 +86,9 @@
     </ion-card-content>
   </ion-card>
   <ion-list *ngIf="searchReturned && displayBooks" style="margin-top: 250px;">
-    <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" (click)="viewBook(res)">
+    <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" 
+              (click)= "viewBook(res)" [routerLink]="['/work-detail']" 
+              [queryParams]="{ key: res.key }">
       <div style="width: 90vw;">
         <ion-label class="wrap title">
           <span style="font-size: 12px; color: grey;">{{i + 1}}.</span>  {{res.title}}

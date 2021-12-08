@@ -1,9 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>WorkDetail</ion-title>
+    <ion-title>Book Information</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="hori">
+    <ion-img *ngIf="detail.getImgUrl() !== ''" 
+    class="img"
+    [src]="detail.getImgUrl()"></ion-img>
+    <div class="stack">
+      <ion-button>Save</ion-button>
+      <ion-button color="danger">Delete</ion-button>
+    </div>
+  </div>
+  <div class="stack">
+    <ion-label class="header">Title</ion-label>
+    <ion-label class="detail">{{detail.title}}</ion-label>
+    <ion-label class="header">Author</ion-label>
+    <ion-label class="detail">{{detail.getAuthorStr()}}</ion-label>
+    <ion-label class="header">First Publish Date</ion-label>
+    <ion-label class="detail">{{detail.first_publish_date}}</ion-label>
+    <ion-button color="medium">View All Editions</ion-button>
+    <ion-label class="header">Description</ion-label>
+    <ion-label class="detail">{{detail.desc}}</ion-label>
+    <ion-label class="header">Subjects</ion-label>
+    <ion-label class="detail">{{detail.getSubjectStr()}}</ion-label>
+    <ion-label class="header">Subjects Places</ion-label>
+    <ion-label class="detail">{{detail.getSubjectPlaces()}}</ion-label>
+  </div>
 </ion-content>

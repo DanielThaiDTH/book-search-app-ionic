@@ -1,0 +1,23 @@
+.img {
+    width: 60vw;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.hori {
+    display: flex;
+    flex-direction: row;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+}
+
+.detail {
+    margin: 5px 0px 10px 0px;
+}

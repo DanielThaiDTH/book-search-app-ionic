@@ -21,7 +21,7 @@
     <ion-label class="detail">{{detail.getAuthorStr()}}</ion-label>
     <ion-label class="header">First Publish Date</ion-label>
     <ion-label class="detail">{{detail.first_publish_date}}</ion-label>
-    <ion-button color="medium">View All Editions</ion-button>
+    <ion-button color="medium" (click)="viewEditionsClicked()"  [routerLink]="['/edition-list']">View All Editions</ion-button>
     <ion-label class="header">Description</ion-label>
     <ion-label class="detail">{{detail.desc}}</ion-label>
     <ion-label class="header">Subjects</ion-label>

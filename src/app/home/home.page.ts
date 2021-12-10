@@ -89,7 +89,7 @@ export class HomePage {
   }
 
   viewBook(book: BookInfo): void {
-    this.his.setLatestHistory({ authors: book.author_name, editons: book.edition_key });
+    this.his.setLatestHistory({ authors: book.author_name, editions: book.edition_key });
   }
 
   viewAuthor(author: any): void {

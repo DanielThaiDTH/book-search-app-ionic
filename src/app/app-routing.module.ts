@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'work-detail',
     loadChildren: () => import('./work-detail/work-detail.module').then( m => m.WorkDetailPageModule)
   },
+  {
+    path: 'edition-list',
+    loadChildren: () => import('./edition-list/edition-list.module').then( m => m.EditionListPageModule)
+  },
 ];
 
 @NgModule({

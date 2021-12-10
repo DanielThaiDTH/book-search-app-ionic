@@ -11,7 +11,7 @@ export class HistoryService {
 
   setLatestHistory(obj: any)
   {
-    this.latest = obj;
+    this.latest = {...obj};
   }
 
   getLatestHistory(): any

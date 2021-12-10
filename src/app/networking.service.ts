@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { BookInfo } from './Models/BookInfo';
 import { AuthorInfo } from './Models/AuthorInfo';
 import { BookDetail } from './Models/BookDetail';
+import { EditionSummary } from './Models/EditionSummary';
 
 const MAXLIMIT: number = 200;
 
@@ -84,6 +85,11 @@ export class NetworkingService {
     let count: number = 0;
     let url: string = this.editionRoot;
     let initial: boolean = true;
+
+    if (!Array.isArray(editionKeys)) {
+      console.log(editionKeys);
+      return null;
+    }
 
     editionKeys.forEach(key => {
       if (count < this.EDLIMIT) {

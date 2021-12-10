@@ -1,0 +1,16 @@
+.title {
+    color: darkblue;
+    font-weight: bold;
+    font-size: 15px;
+    width: 90vw;
+}
+
+.edition {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrap {
+  overflow-wrap: break-word;
+  inline-size: 50vw;
+}

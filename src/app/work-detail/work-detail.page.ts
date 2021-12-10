@@ -32,11 +32,16 @@ export class WorkDetailPage implements OnInit {
       let history = this.his.getLatestHistory();
       this.detail.author_list = history.authors;
       this.detail.edition_keys = history.editions;
+      console.info(this.detail.edition_keys);
 
     } else {
       console.error("No key provided");
     }
   }
 
-
+  viewEditionsClicked(): void {
+    console.log("Edition clicked");
+    console.warn(this.detail.edition_keys);
+    this.his.setLatestHistory({ editions: this.detail.edition_keys });
+  }
 }

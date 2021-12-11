@@ -8,14 +8,16 @@
   <ion-list-header>
     List of Editions
   </ion-list-header>
-  <ion-list *ngIf="editions">
-    <ion-item *ngFor="let ed of editions;" class="edition">
-      <div style="width: 60%;">
+  <ion-list *ngIf="editions" style="width: 95vw;">
+    <ion-item *ngFor="let ed of editions;" 
+              class="edition" style="width: 95vw;"
+              [routerLink]="['/edition-detail']" [queryParams]="{ key: ed.key }">
+      <div style="width: 50%;">
         <ion-label class="title">{{ed.title}}</ion-label>
         <ion-label class="wrap">{{ed.author_list | nullString}}</ion-label>
         <ion-label class="wrap">{{ed.number_of_pages | nullString}} <span *ngIf="ed.number_of_pages">pages</span></ion-label>
       </div>
-      <div style="text-align: end; width:40%;">
+      <div style="text-align: end; width:50%;">
         <ion-label style="text-align: end;" class="wrap">{{ed.publishers_list | nullString}}</ion-label>
         <ion-label style="text-align: end;" class="wrap">{{ed.publish_places_list | nullString}}</ion-label>
       </div>

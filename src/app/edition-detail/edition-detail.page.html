@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>EditionDetail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="stack" *ngIf="edition">
+    <ion-img *ngIf="edition.getImgURL() !== ''" class="img" [src]="edition.getImgURL()"></ion-img>
+    <ion-label class="header">Title</ion-label>
+    <ion-label class="detail">{{edition.title | nullString }}</ion-label>
+    <ion-label class="header">Author</ion-label>
+    <ion-label class="detail">{{edition.getAuthorsCS()}}</ion-label>
+    <ion-label class="header">Publishers</ion-label>
+    <ion-label class="detail">{{edition.getPublishersCS()}}</ion-label>
+    <ion-label class="header">Published At</ion-label>
+    <ion-label class="detail">{{edition.getPublishLocationsCS()}}</ion-label>
+    <ion-label class="header">Publish Date</ion-label>
+    <ion-label class="detail">{{edition.publish_date}}</ion-label>
+    <ion-label class="header">Number of Pages</ion-label>
+    <ion-label class="detail">{{edition.number_of_pages}}</ion-label>
+    <ion-label class="header">Language</ion-label>
+    <ion-label class="detail">{{edition.language}}</ion-label>
+    <ion-label class="header">Genres</ion-label>
+    <ion-label class="detail">{{edition.getGenresCS()}}</ion-label>
+    <ion-label class="header">ISBN</ion-label>
+    <ion-label class="detail">{{edition.getISBNs()}}</ion-label>
+    <ion-label class="header">Amazon</ion-label>
+    <a class="detail" (click)="openLink($event)">{{edition.getAmazonURL()}}</a>
+    <ion-label class="header">Goodreads</ion-label>
+    <a class="detail" (click)="openLink($event)">{{edition.getGoodreadsURL()}}</a>
+    <ion-label class="header">LibraryThing</ion-label>
+    <a class="detail" (click)="openLink($event)">{{edition.getLibrarythingURL()}}</a>
+  </div>
+</ion-content>

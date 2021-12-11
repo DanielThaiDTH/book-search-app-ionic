@@ -21,7 +21,6 @@ export class EditionListPage implements OnInit {
 
     this.client.searchEditions(ed).subscribe(
       res => {
-        console.log(res);
         let keys: string[] = Object.keys(res);
         this.editions = keys.map(k=>{
           let ed: EditionSummary = new EditionSummary();

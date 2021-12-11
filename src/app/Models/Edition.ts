@@ -3,6 +3,7 @@
 export class Edition {
     key: string;
     title: string;
+    full_title: string; //Schema was changed, now uses this key for detailed edition information
     number_of_pages: number; 
     by_statement: string;
     publish_date: string;
@@ -40,6 +41,11 @@ export class Edition {
             this.isbn10 = this.identifiers["isbn_10"][0];
         if (this.identifiers["isbn_13"])
             this.isbn13 = this.identifiers["isbn_13"][0];
+
+        if (!this.title && this.full_title) 
+            this.title = this.full_title;
+        else if (!this.title)
+            this.title = "";
     }
 
 
@@ -50,7 +56,7 @@ export class Edition {
         return "https://www.goodreads.com/book/show/" + this.goodreads;
     }
 
-    GetLibrarythingURL(): string {
+    getLibrarythingURL(): string {
         if (!this.librarything)
             return "";
 

@@ -111,7 +111,7 @@ export class NetworkingService {
   /**
    * Key must have '/' attached to the front.
    */
-  queryEdition(key: string) {
+  queryEdition(key: string): Observable<any> {
     let url: string = this.baseRoot + key + ".json";
     return this.client.get(url);
   }

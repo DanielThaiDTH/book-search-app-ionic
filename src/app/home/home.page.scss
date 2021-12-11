@@ -1,3 +1,4 @@
+
 .main {
   display: flex;
   flex-direction: column;
@@ -22,8 +23,33 @@
   //justify-content: space-between;
 }
 
+
+//Search styles
+.ios .search-card {
+  width: 95vw; 
+  margin: 5px 5px 5px 8px;
+  background-color: #fffbf9;
+}
+
+.search-card {
+  width: 95vw; 
+  margin: 5px 5px 5px 10px;
+  background-color: #fffbf9;
+}
+
 #input-form {
   margin: 5px 10px 10px 10px;
+  --background: #fffbf9;
+}
+
+#input {
+  --background: #fffbf9;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+}
+
+#input-label {
+  margin-bottom: 20px;
 }
 
 #setting {
@@ -45,6 +71,32 @@
   font-size: 15px;
   margin-right: 10px;
 }
+
+
+//Result styles
+.ios .result-card {
+  width: 95vw; 
+  margin: 170px 5px 5px 8px;
+  --background: #fffbf9;
+}
+
+.result-card {
+  width: 95vw; 
+  margin: 150px 5px 5px 10px;
+  --background: #fffbf9;
+}
+
+
+//List styles
+.ios .list {
+  margin-top: 265px;
+}
+
+.list {
+  margin-top: 240px;
+}
+
+
 
 .wrap {
   overflow-wrap: break-word;

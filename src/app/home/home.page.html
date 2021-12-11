@@ -9,11 +9,13 @@
 <ion-content>
   <!-- Search form plus search settings -->
   <form #f="ngForm" (ngSubmit)="search(f)" slot="fixed">
-    <ion-card style="width: 95vw;">
+    <ion-card class="search-card">
       <ion-card-content>
         <ion-item id="input-form">
-          <ion-label position="stacked">Search: </ion-label>
-          <ion-input required ngModel name="query" placeholder="Search for books"></ion-input>
+          <ion-label position="stacked" id="input-label">Search: </ion-label>
+          <ion-input required ngModel name="query" 
+                     placeholder="Search for books"
+                     id="input"></ion-input>
         </ion-item>
         <div class="row">
           <ion-button color="medium" id="setting" (click)="toggleSettingsVisibility()">
@@ -54,7 +56,6 @@
                       </ion-item>
                     </ion-col>
                   </ion-row>
-                  
                 </ion-grid>
               </ion-radio-group>
             </ion-item>
@@ -77,7 +78,7 @@
     </ion-card>
   </form>
   <!-- Content Display -->
-  <ion-card slot="fixed" style="width: 95vw; margin-top: 160px;">
+  <ion-card *ngIf="count > 0" slot="fixed" class="result-card">
     <ion-card-content *ngIf="!settingsVisible">
       <div class="col">
         <ion-label *ngIf="searchReturned">{{count}} {{typeStr}} found</ion-label>
@@ -85,17 +86,18 @@
       </div>
     </ion-card-content>
   </ion-card>
-  <ion-list *ngIf="searchReturned && displayBooks" style="margin-top: 250px;">
+  <!-- Search Lists -->
+  <ion-list *ngIf="searchReturned && displayBooks" class="list">
     <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" 
               (click)= "viewBook(res)" [routerLink]="['/work-detail']" 
               [queryParams]="{ key: res.key }">
-      <div style="width: 90vw;">
+      <div style="width: 95vw;">
         <ion-label class="wrap title">
           <span style="font-size: 12px; color: grey;">{{i + 1}}.</span>  {{res.title}}
         </ion-label>
         <ion-label class="wrap name">{{res.author_name}}</ion-label>
         <div class="horizontal">
-          <ion-label style="flex-basis: 60vw;">{{res.first_publish_year}}</ion-label>
+          <ion-label style="flex-basis: 55vw;">{{res.first_publish_year}}</ion-label>
           <ion-label style="font-size: 14px; color: grey; font-style: italic; text-align: end;">
             {{res.edition_count}} edition(s) found
           </ion-label>
@@ -103,9 +105,9 @@
       </div>
     </ion-item>
   </ion-list>
-  <ion-list *ngIf="searchReturned && !displayBooks" style="margin-top: 250px;">
+  <ion-list *ngIf="searchReturned && !displayBooks" class="list">
     <ion-item style="width: 95vw;" *ngFor="let auth of authorResults; index as i">
-      <div style="width: 90vw;">
+      <div style="width: 95vw;">
         <ion-label class="wrap title">
           <span style="font-size: 12px; color: grey;">{{i + 1}}.</span> {{auth.name}}
         </ion-label>

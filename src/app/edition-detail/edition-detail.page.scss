@@ -1,5 +1,7 @@
 .img {
     width: 60vw;
+    align-self: center;
+    object-fit: contain;
 }
 
 .stack {
@@ -16,9 +18,10 @@
     font-weight: bold;
     font-size: 18px;
     color: black;
+    margin: 5px 0px 5px 5px;
 }
 
 .detail {
-    margin: 5px 0px 10px 0px;
+    margin: 5px 0px 10px 10px;
     user-select: auto;
 }

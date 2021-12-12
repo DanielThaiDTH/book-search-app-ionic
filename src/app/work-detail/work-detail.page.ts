@@ -67,6 +67,7 @@ export class WorkDetailPage implements OnInit {
 
   saveBook(): void {
     if (!this.his.isBookSaved(this.detail.key)) {
+      this.detail.addTime = new Date();
       this.his.saveBook(this.detail);
       this.isSaved = true;
     }

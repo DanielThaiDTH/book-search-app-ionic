@@ -145,7 +145,7 @@ export class NetworkingService {
   }
 
   /**
-   * Must not have a '/author/' in the front of the key.
+   * Must NOT have a '/author/' in the front of the key.
    */
   queryAuthor(key: string): Observable<any> {
     let url: string = this.baseRoot + "/authors/" + key + ".json";

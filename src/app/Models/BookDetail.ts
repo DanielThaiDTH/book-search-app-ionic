@@ -93,6 +93,13 @@ export class BookDetail {
         return "https://covers.openlibrary.org/b/id/" + this.covers[idx] + "-L.jpg";
     }
 
+    getDateString(): string {
+        if (this.addTime) {
+            return this.addTime.toLocaleDateString() + " " + this.addTime.toLocaleTimeString().split(' ')[0]
+        } else {
+            return "";
+        }
+    }
 
     static buildBookDetail(src: any): BookDetail {
         let detail: BookDetail = new BookDetail;

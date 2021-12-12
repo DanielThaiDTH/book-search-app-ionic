@@ -20,7 +20,10 @@ export class AuthorDetailPage implements OnInit {
 
   ngOnInit() {
     this.key = this.route.snapshot.queryParams['key'];
-    
+    if (this.key.charAt(0) === "/") {
+      this.key = this.key.substring(9);
+    }
+
     if (this.key) {
 
       if (this.his.isAuthorSaved("/authors/" + this.key)) {
@@ -31,9 +34,10 @@ export class AuthorDetailPage implements OnInit {
         this.isSaved = false;
       }
 
-      let cached = this.his.getCache(this.key);
+      let cached = this.his.getCache("/authors/" + this.key);
 
       if (cached) {
+        console.log("Got cached page");
         this.author = cached;
       } else {
         this.client.queryAuthor(this.key).subscribe(
@@ -54,6 +58,7 @@ export class AuthorDetailPage implements OnInit {
 
   saveAuthor(): void {
     if (!this.his.isAuthorSaved(this.author.key)) {
+      this.author.addTime = new Date();
       this.his.saveAuthor(this.author);
       //console.log(this.author.key);
       this.isSaved = true;

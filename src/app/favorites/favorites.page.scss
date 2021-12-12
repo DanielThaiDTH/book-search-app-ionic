@@ -1,0 +1,34 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.list-item {
+    height: min-content;
+}
+
+.wrap {
+  overflow-wrap: break-word;
+  inline-size: 80vw;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.title {
+  font-weight: bold;
+  color: darkblue;
+}
+
+.name {
+  color: darkmagenta;
+}

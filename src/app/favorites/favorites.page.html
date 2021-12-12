@@ -1,9 +1,45 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Favorites</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-segment value="book" (ionChange)="tabChanged($event)">
+    <ion-segment-button value="book">
+      <ion-label>Books</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="author">
+      <ion-label>Authors</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div>
+    <ion-list *ngIf="selectedTab.valueOf() === 'book' && savedBooks">
+      <ion-item *ngFor="let book of savedBooks; index as i" class="list-item"
+                (click)="goToBook(book)">
+        <div class="col" style="width: 95vw; height: fit-content;">
+          <ion-label class="wrap title">
+            <span style="font-size: 12px; color: grey;">{{i + 1}}.</span> {{book.title}}
+          </ion-label>
+          <ion-label class="wrap name">{{book.getAuthorStr()}}</ion-label>
+          <ion-label>{{book.first_publish_date}}</ion-label>
+          <ion-label>Added: {{book.getDateString()}}</ion-label>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="selectedTab.valueOf() === 'author' && savedAuthors">
+      <ion-item *ngFor="let author of savedAuthors; index as i" class="list-item"
+                [routerLink]="['/author-detail']" [queryParams]="{ key: author.key }">
+        <div class="col" style="width: 95vw; height: fit-content;">
+          <ion-label class="wrap title">
+            <span style="font-size: 12px; color: grey;">{{i + 1}}.</span> {{author.name}}
+          </ion-label>
+          <ion-label>Added: {{author.getDateString()}}</ion-label>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

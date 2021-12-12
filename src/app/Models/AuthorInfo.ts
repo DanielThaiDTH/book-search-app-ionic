@@ -29,6 +29,14 @@ export class AuthorInfo {
         }
     }
 
+    getDateString(): string {
+        if (this.addTime) {
+            return this.addTime.toLocaleDateString() + " " + this.addTime.toLocaleTimeString().split(' ')[0]
+        } else {
+            return "";
+        }
+    }
+
     static buildAuthor(src: any): AuthorInfo {
         let author: AuthorInfo = new AuthorInfo;
 

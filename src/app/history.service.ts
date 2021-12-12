@@ -48,11 +48,11 @@ export class HistoryService {
   removeBook(key: string): void {
     this.savedBooks.delete(key);
     this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
-    this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
   }
-
+  
   removeAuthor(key: string): void {
     this.savedAuthors.delete(key);
+    this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
   }
 
   getBooks(): BehaviorSubject<BookDetail[]> {

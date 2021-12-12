@@ -43,7 +43,6 @@ export class ByAuthorPage implements OnInit {
       console.error(err);
       alert("Could not navigate");
     });
-    
   }
 
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Browser } from '@capacitor/browser';
+import { ActivatedRoute } from '@angular/router';
 
 import { EditionSummary } from '../Models/EditionSummary';
-import { ActivatedRoute } from '@angular/router';
 import { NetworkingService } from '../networking.service';
 import { HistoryService } from '../history.service';
 import { EditionDetail } from '../Models/EditionDetail';
@@ -23,6 +23,7 @@ export class EditionDetailPage implements OnInit {
 
   async ngOnInit() {
     let param = this.route.snapshot.queryParams['key'];
+    this.key = param;
     if (param) {
       try {
         this.client.queryEdition(param).subscribe(

@@ -73,6 +73,9 @@ export class NetworkingService {
   }
 
 
+  /**
+   * Key should contain /authors/[key] to work
+   */
   searchWorksBy(key: string) {
     let url: string = this.baseRoot + key + "/works.json?" + this.limitOpt + this.returnLimit.toString();
     return this.client.get(url);
@@ -109,7 +112,7 @@ export class NetworkingService {
 
 
   /**
-   * Key must have '/' attached to the front.
+   * Key must have '/books/' attached to the front.
    */
   queryEdition(key: string): Observable<any> {
     let url: string = this.baseRoot + key + ".json";
@@ -117,6 +120,9 @@ export class NetworkingService {
   }
 
 
+  /**
+   * Key must have '/work/' in the front
+   */
   async queryWork(key: string): Promise<BookDetail> {
     let url: string = this.baseRoot + key + ".json";
 
@@ -139,11 +145,37 @@ export class NetworkingService {
   }
 
   /**
-   * Must not have a '/' in the front of the key.
+   * Must not have a '/author/' in the front of the key.
    */
-  queryAuthor(key: string) {
+  queryAuthor(key: string): Observable<any> {
     let url: string = this.baseRoot + "/authors/" + key + ".json";
     return this.client.get(url);
+  }
+
+
+  /** Obtains two lists, a list of edition keys and a list of author names. 
+   *  Needed because author work search does not return compelte information.
+   * 
+   * Uses the Openlobrary work key as a parameter.
+   * 
+   * Two lists, the first being the edition keys under 'key', the second is the author names
+   * under 'name'.
+   */
+  async getEditionsAndAuthors(work_key: string): Promise<any> {
+    let result = await this.searchBooks(work_key).toPromise();
+    let returnLists: any = {};
+    if (result) {
+      if (!result.docs || result.docs.length === 0)
+        throw new Error("Failed to get information");
+
+      var info = result.docs[0];
+      returnLists['key'] = info.edition_key;
+      returnLists['name'] = info.author_name;
+
+      return returnLists;
+    } else {
+      return null;
+    }
   }
 
 

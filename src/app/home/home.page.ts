@@ -19,6 +19,7 @@ export class HomePage {
   searchReturned: boolean = false;
   displayBooks: boolean = true;
   typeStr: string = "";
+  searchText: string = "Search for books";
   bookResults: any[] = [];
   authorResults: any[] = [];
 
@@ -52,10 +53,11 @@ export class HomePage {
         res => {
           this.count = res.docs.length;
           this.typeStr = "authors";
+          this.searchText = "Search for authors";
           this.searchReturned = true;
           this.displayBooks = false;
           this.authorResults = res.docs;
-          console.log(res);
+          //console.log(res);
         },
         err => {
           this.searchReturned = false;
@@ -67,10 +69,11 @@ export class HomePage {
         res => {
           this.count = res.docs.length;
           this.typeStr = "books";
+          this.searchText = "Search for books";
           this.searchReturned = true;
           this.displayBooks = true;
           this.bookResults = res.docs;
-          console.log(res);
+          //console.log(res);
         },
         err => { 
           this.searchReturned = true;
@@ -86,6 +89,10 @@ export class HomePage {
       this.settingStyle = "";
     else
       this.settingStyle = "visibility: hidden;  height: 0px;"
+  }
+
+  categoryClicked(event: Event): void {
+    this.searchText = "Search for " + (event.target as HTMLElement).getAttribute("value");
   }
 
   viewBook(book: BookInfo): void {

@@ -14,8 +14,8 @@
         <ion-item id="input-form">
           <ion-label position="stacked" id="input-label">Search: </ion-label>
           <ion-input required ngModel name="query" 
-                     placeholder="Search for books"
-                     id="input"></ion-input>
+                     [attr.placeholder]="searchText"
+                     id="input" class="ion-margin-top"></ion-input>
         </ion-item>
         <div class="row">
           <ion-button color="medium" id="setting" (click)="toggleSettingsVisibility()">
@@ -60,15 +60,15 @@
               </ion-radio-group>
             </ion-item>
             <ion-item>
-              <ion-radio-group ngModel name="searchCategory" value="book">
+              <ion-radio-group ngModel name="searchCategory" value="book" >
                 <ion-label style="font-weight: bold;">Search For</ion-label>
                 <ion-item>
                   <ion-label class="setting-label">Book</ion-label>
-                  <ion-radio value="book"></ion-radio>
+                  <ion-radio value="book" (click)="categoryClicked($event)"></ion-radio>
                 </ion-item>
                 <ion-item>
                   <ion-label class="setting-label">Author</ion-label>
-                  <ion-radio value="author"></ion-radio>
+                  <ion-radio value="author" (click)="categoryClicked($event)"></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-item>
@@ -87,6 +87,7 @@
     </ion-card-content>
   </ion-card>
   <!-- Search Lists -->
+  <!-- Book List -->
   <ion-list *ngIf="searchReturned && displayBooks" class="list">
     <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" 
               (click)= "viewBook(res)" [routerLink]="['/work-detail']" 
@@ -105,8 +106,10 @@
       </div>
     </ion-item>
   </ion-list>
+  <!-- Author List -->
   <ion-list *ngIf="searchReturned && !displayBooks" class="list">
-    <ion-item style="width: 95vw;" *ngFor="let auth of authorResults; index as i">
+    <ion-item style="width: 95vw;" *ngFor="let auth of authorResults; index as i"
+              [routerLink]="['/author-detail']" [queryParams]="{ key: auth.key }">
       <div style="width: 95vw;">
         <ion-label class="wrap title">
           <span style="font-size: 12px; color: grey;">{{i + 1}}.</span> {{auth.name}}

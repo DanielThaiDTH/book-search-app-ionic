@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EditionSummary } from '../Models/EditionSummary';
 import { ActivatedRoute } from '@angular/router';
 import { NetworkingService } from '../networking.service';
 import { HistoryService } from '../history.service';
+
+import { EditionSummary } from '../Models/EditionSummary';
 
 @Component({
   selector: 'app-edition-list',

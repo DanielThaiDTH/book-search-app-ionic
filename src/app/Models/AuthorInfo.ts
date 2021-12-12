@@ -1,6 +1,7 @@
 export class AuthorInfo {
     key: string;
     name: string;
+    bio: any; //Original key of the biography, could be an array, object or plain string
     biography: string;
     birth_date: string;
     death_date: string;

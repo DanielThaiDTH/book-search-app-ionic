@@ -50,6 +50,7 @@
 
 #input-label {
   margin-bottom: 20px;
+  z-index: 1;
 }
 
 #setting {
@@ -60,8 +61,8 @@
 
 #setting-frame {
   border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  border-color: #705050;
+  border-width: 2px;
   border-radius: 10px;
   margin-left: 7vw;
   margin-right: 7vw;

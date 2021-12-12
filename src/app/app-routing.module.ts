@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'edition-detail',
     loadChildren: () => import('./edition-detail/edition-detail.module').then( m => m.EditionDetailPageModule)
   },
+  {
+    path: 'author-detail',
+    loadChildren: () => import('./author-detail/author-detail.module').then( m => m.AuthorDetailPageModule)
+  },
+  {
+    path: 'by-author',
+    loadChildren: () => import('./by-author/by-author.module').then( m => m.ByAuthorPageModule)
+  },
 ];
 
 @NgModule({

@@ -90,7 +90,7 @@ export class NetworkingService {
     let initial: boolean = true;
 
     if (!Array.isArray(editionKeys)) {
-      console.log(editionKeys);
+      //console.log(editionKeys);
       return null;
     }
 
@@ -156,12 +156,13 @@ export class NetworkingService {
   /** Obtains two lists, a list of edition keys and a list of author names. 
    *  Needed because author work search does not return compelte information.
    * 
-   * Uses the Openlobrary work key as a parameter.
+   * Uses the Openlibrary work key as a parameter.
    * 
    * Two lists, the first being the edition keys under 'key', the second is the author names
    * under 'name'.
    */
   async getEditionsAndAuthors(work_key: string): Promise<any> {
+    if (work_key.charAt(0) === '/') work_key = work_key.substring(7);
     let result = await this.searchBooks(work_key).toPromise();
     let returnLists: any = {};
     if (result) {

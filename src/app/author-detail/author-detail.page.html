@@ -8,8 +8,12 @@
   <div *ngIf="author" class="hori">
     <ion-img *ngIf="author.getImgUrl() !== ''" class="img" [src]="author.getImgUrl()"></ion-img>
     <div class="stack">
-      <ion-button>Save</ion-button>
-      <ion-button color="danger">Delete</ion-button>
+      <ion-button  [disabled]="isSaved" (click)="saveAuthor()">
+        Save
+      </ion-button>
+      <ion-button [disabled]="!isSaved" (click)="deleteAuthor()" color="danger">
+        Delete
+      </ion-button>
       <ion-button color="success" 
                   style="align-self: flex-end;"
                   [routerLink]="['/by-author']"

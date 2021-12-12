@@ -14,22 +14,56 @@ export class AuthorDetailPage implements OnInit {
 
   author: AuthorInfo;
   key: string;
+  isSaved: boolean;
   
   constructor(private route: ActivatedRoute, private client: NetworkingService, private his: HistoryService) { }
 
   ngOnInit() {
     this.key = this.route.snapshot.queryParams['key'];
+    
     if (this.key) {
-      this.client.queryAuthor(this.key).subscribe(
-        res =>{
-          this.author = AuthorInfo.buildAuthor(res);
-          this.author.setUncleanValues(res);
-        }
-      );
+
+      if (this.his.isAuthorSaved("/authors/" + this.key)) {
+        console.log("Is saved " + this.key);
+        this.isSaved = true;
+      } else {
+        console.log("Is not saved " + this.key);
+        this.isSaved = false;
+      }
+
+      let cached = this.his.getCache(this.key);
+
+      if (cached) {
+        this.author = cached;
+      } else {
+        this.client.queryAuthor(this.key).subscribe(
+          res =>{
+            this.author = AuthorInfo.buildAuthor(res);
+            this.author.setUncleanValues(res);
+            this.his.addToCache(this.author);
+          }
+        );
+      }
+
     } else {
       console.error("No author key was provided in the path.");
       alert("No author key was provided.");
     }
   }
 
+
+  saveAuthor(): void {
+    if (!this.his.isAuthorSaved(this.author.key)) {
+      this.his.saveAuthor(this.author);
+      //console.log(this.author.key);
+      this.isSaved = true;
+    }
+  }
+
+  deleteAuthor(): void {
+    if (this.his.isAuthorSaved(this.author.key)) {
+      this.his.removeAuthor(this.author.key);
+      this.isSaved = false;
+    }
+  }
 }

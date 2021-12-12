@@ -13,6 +13,7 @@ import { BookDetail } from '../Models/BookDetail';
 export class WorkDetailPage implements OnInit {
 
   detail: BookDetail = BookDetail.makeEmpty();
+  isSaved: boolean;
 
   constructor(private route: ActivatedRoute, private client: NetworkingService, private his: HistoryService) { }
 
@@ -20,19 +21,38 @@ export class WorkDetailPage implements OnInit {
     let param = this.route.snapshot.queryParams['key'];
     if (param) {
 
-      try {
-        this.detail = await this.client.queryWork(param);
-        console.log(this.detail);
-      } catch (e) {
-        alert("No resource retrieved from OpenLibrary: " + e.message);
-        console.error(e);
-        this.detail = BookDetail.makeEmpty();
+      if (this.his.isBookSaved("/works/" + param)) {
+        console.log("Is saved " + param);
+        this.isSaved = true;
+      } else {
+        console.log("Is not saved " + param);
+        this.isSaved = false;
       }
 
-      let history = this.his.getLatestHistory();
-      this.detail.author_list = history.authors;
-      this.detail.edition_keys = history.editions;
-      console.info(this.detail.edition_keys);
+      let cached = this.his.getCache(param);
+
+      if (cached) {
+        this.detail = cached;
+      } else {
+
+        try {
+          this.detail = await this.client.queryWork(param);
+          //console.log(this.detail);
+        } catch (e) {
+          alert("No resource retrieved from OpenLibrary: " + e.message);
+          console.error(e);
+          this.detail = BookDetail.makeEmpty();
+        }
+
+        let history = this.his.getLatestHistory();
+        this.detail.author_list = history.authors;
+        this.detail.edition_keys = history.editions;
+
+        this.his.addToCache(this.detail);
+      }
+
+      
+      //console.info(this.detail.edition_keys);
 
     } else {
       console.error("No key provided");
@@ -43,5 +63,19 @@ export class WorkDetailPage implements OnInit {
     console.log("Edition clicked");
     console.warn(this.detail.edition_keys);
     this.his.setLatestHistory({ editions: this.detail.edition_keys });
+  }
+
+  saveBook(): void {
+    if (!this.his.isBookSaved(this.detail.key)) {
+      this.his.saveBook(this.detail);
+      this.isSaved = true;
+    }
+  }
+
+  deleteBook(): void {
+    if (this.his.isBookSaved(this.detail.key)) {
+      this.his.removeBook(this.detail.key);
+      this.isSaved = false;
+    }
   }
 }

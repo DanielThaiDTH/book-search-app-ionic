@@ -10,8 +10,8 @@
     class="img"
     [src]="detail.getImgUrl()"></ion-img>
     <div class="stack">
-      <ion-button>Save</ion-button>
-      <ion-button color="danger">Delete</ion-button>
+      <ion-button [disabled]="isSaved" (click)="saveBook()">Save</ion-button>
+      <ion-button color="danger" [disabled]="!isSaved" (click)="deleteBook()">Delete</ion-button>
     </div>
   </div>
   <div class="stack">

@@ -21,7 +21,7 @@ export class WorkDetailPage implements OnInit {
     let param = this.route.snapshot.queryParams['key'];
     if (param) {
 
-      if (this.his.isBookSaved("/works/" + param)) {
+      if (this.his.isBookSaved(param)) {
         console.log("Is saved " + param);
         this.isSaved = true;
       } else {

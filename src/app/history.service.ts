@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BookDetail } from './Models/BookDetail';
 import { AuthorInfo } from './Models/AuthorInfo';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class HistoryService {
   latest: any;
   savedBooks: Map<string, BookDetail>;
   savedAuthors: Map<string, AuthorInfo>;
+  savedBooksSubject: BehaviorSubject<BookDetail[]> = new BehaviorSubject([]); //Needed because 
+  savedAuthorsSubject: BehaviorSubject<AuthorInfo[]> = new BehaviorSubject([]);;
   cache: any[];
   CACHELIMIT: number = 20;
 
@@ -33,26 +37,30 @@ export class HistoryService {
 
   saveBook(book: BookDetail): void {
     this.savedBooks.set(book.key, book);
+    this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
   }
 
   saveAuthor(author: AuthorInfo): void {
     this.savedAuthors.set(author.key, author);
+    this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
   }
 
   removeBook(key: string): void {
     this.savedBooks.delete(key);
+    this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
+    this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
   }
 
   removeAuthor(key: string): void {
     this.savedAuthors.delete(key);
   }
 
-  getBooks(): BookDetail[] {
-    return Array.from(this.savedBooks.values());
+  getBooks(): BehaviorSubject<BookDetail[]> {
+    return this.savedBooksSubject;
   }
 
-  getAuthors(): AuthorInfo[] {
-    return Array.from(this.savedAuthors.values());
+  getAuthors(): BehaviorSubject<AuthorInfo[]> {
+    return this.savedAuthorsSubject;
   }
 
   isBookSaved(key: string): boolean {

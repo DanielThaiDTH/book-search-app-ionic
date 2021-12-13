@@ -14,6 +14,7 @@
   <ion-list-header>
     List of Editions
   </ion-list-header>
+  <ion-spinner *ngIf="!editions" color="primary"></ion-spinner>
   <ion-list *ngIf="editions" style="width: 95vw;">
     <ion-item *ngFor="let ed of editions;" 
               class="edition" style="width: 95vw;"

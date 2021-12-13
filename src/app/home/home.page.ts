@@ -31,6 +31,10 @@ export class HomePage {
     
   }
 
+  /**
+   * Performs the search, ensures the query is valid. 
+   * Uses the settings to customize the search.
+   */
   search(f: NgForm): void {
     if (!f.valid)
       return;
@@ -50,6 +54,8 @@ export class HomePage {
       this.network.searchOption = SearchType.ISBN;
     }
 
+    this.isLoading = true;
+
     if (f.value.searchCategory === "author") {
       this.network.searchAuthors(f.value.query).subscribe(
         res => {
@@ -64,7 +70,8 @@ export class HomePage {
         err => {
           this.searchReturned = false;
           console.log(err);
-        }
+        },
+        () => { this.isLoading = false; }
       );
     } else {
       this.network.searchBooks(f.value.query).subscribe(
@@ -80,7 +87,8 @@ export class HomePage {
         err => { 
           this.searchReturned = true;
           console.log(err);
-        }
+        },
+        () => { this.isLoading = false; }
       );
     }
   }

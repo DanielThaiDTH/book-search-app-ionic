@@ -11,8 +11,4 @@ export class AppComponent {
   constructor(private his: HistoryService) {
     this.his.init().then(res => this.viewable = res);
   }
-
-  ionViewCanEnter() {
-
-  }
 }

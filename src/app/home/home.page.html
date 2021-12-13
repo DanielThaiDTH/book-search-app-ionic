@@ -93,7 +93,7 @@
     </ion-card-content>
   </ion-card>
   <!-- Search Lists -->
-  <ion-spinner *ngIf="isLoading" color="primary"></ion-spinner>
+  <ion-spinner *ngIf="isLoading" color="primary" class="spinner"></ion-spinner>
   <!-- Book List -->
   <ion-list *ngIf="searchReturned && displayBooks" class="list">
     <ion-item style="width: 95vw;" *ngFor="let res of bookResults; index as i" 

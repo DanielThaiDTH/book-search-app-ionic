@@ -1,3 +1,4 @@
+/** Stores information about an author. Also provides functionality to get formatted images urls and date strings.*/
 export class AuthorInfo {
     key: string;
     name: string;
@@ -17,6 +18,9 @@ export class AuthorInfo {
         return "https://covers.openlibrary.org/a/id/" + this.photos[idx] + ".jpg";
     }
 
+    /**
+     * Converts the biography from either an array or object to a regular string.
+     */
     setUncleanValues(src: any): void {
         if (src['bio'] && !Array.isArray(src['bio'])) {
             this.biography = src['bio']['value'];
@@ -37,6 +41,7 @@ export class AuthorInfo {
         }
     }
 
+    /**Builds an author from a response JSON. */
     static buildAuthor(src: any): AuthorInfo {
         let author: AuthorInfo = new AuthorInfo;
 

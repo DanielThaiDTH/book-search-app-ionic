@@ -11,7 +11,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner *ngIf="!results" color="primary"></ion-spinner>
+  <ion-spinner *ngIf="!results" 
+               color="primary"
+               style="margin-left: 47vw; margin-top: 50px;">
+  </ion-spinner>
   <ion-list *ngIf="results">
     <ion-item *ngFor="let book of results.entries; index as i">
       <ion-label style="color: darkblue; font-size: 15px;" 

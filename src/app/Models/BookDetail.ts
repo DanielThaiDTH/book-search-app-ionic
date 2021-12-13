@@ -1,3 +1,4 @@
+/** Stores detailed information about a book. */
 export class BookDetail {
     UID: number;
     key: string;
@@ -15,6 +16,9 @@ export class BookDetail {
 
     constructor() { }
 
+    /** Converts a description in the JSON response that may be a array or object to a 
+     * plain string.
+     */
     setUncleanValues(src: any): void {
         if (src['description'] && !Array.isArray(src['description'])) {
             this.desc = src['description']['value'];
@@ -118,6 +122,7 @@ export class BookDetail {
         return detail;
     }
 
+    /** Makes a empty book in cases where there is no response. */
     static makeEmpty(): BookDetail {
         let detail: BookDetail = new BookDetail;
 

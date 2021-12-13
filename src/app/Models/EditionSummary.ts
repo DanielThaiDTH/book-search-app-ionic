@@ -1,5 +1,6 @@
 import { Edition }  from './Edition';
 
+/** Contains summary edition information returned from an edition query. */
 export class EditionSummary extends Edition {
         
     //Keys: url, name - value is string

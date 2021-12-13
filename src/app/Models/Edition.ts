@@ -1,5 +1,5 @@
 
-
+/** Base class of editon classes. Provides formatted access to url strings. */
 export class Edition {
     key: string;
     title: string;
@@ -22,7 +22,7 @@ export class Edition {
 
     constructor() { }
 
-    //Call this after deserialization to flatten attributes
+    /**Call this after deserialization to flatten attributes*/
     flattenAttributes(): void {
         let temp: string[] = [];
 

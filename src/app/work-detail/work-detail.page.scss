@@ -1,5 +1,6 @@
 .img {
     width: 60vw;
+    margin-right: 5vw;
 }
 
 .stack {
@@ -10,6 +11,7 @@
 .hori {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .header {

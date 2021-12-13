@@ -4,6 +4,8 @@ import { BookDetail } from './Models/BookDetail';
 import { AuthorInfo } from './Models/AuthorInfo';
 import { SQLite, SQLiteObject } from '@ionic-enterprise/secure-storage/ngx';
 
+//Unused, unable to startup
+
 @Injectable({
   providedIn: 'root'
 })

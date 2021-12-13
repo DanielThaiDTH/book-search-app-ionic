@@ -16,6 +16,7 @@ export enum SearchType {
   ISBN
 }
 
+/** Provides networking for the app. Connects to OpenLibrary. */
 @Injectable({
   providedIn: 'root'
 })

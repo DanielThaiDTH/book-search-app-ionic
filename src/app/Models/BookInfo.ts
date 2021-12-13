@@ -1,5 +1,5 @@
 
-
+/** Stores book info returned from a search */
 export class BookInfo {
     key: string;
     text: string[];

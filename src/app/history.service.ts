@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BookDetail } from './Models/BookDetail';
 import { AuthorInfo } from './Models/AuthorInfo';
-import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@capacitor/storage';
 // import { DatabaseService } from './database.service';
 
+/** Provides state and database management for the app. Passes state between pages and 
+ * handles the storage of user favorites.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +27,10 @@ export class HistoryService {
     this.savedAuthors = new Map<string, AuthorInfo>();
   }
 
-  async init() {
+  /** Initalizes the favorites from storage. Returns a promise that resolves 
+   * when the storage has been read and loaded.
+   */
+  async init(): Promise<boolean> {
     {
       const { value } = await Storage.get( {key: 'books'} );
       
@@ -78,14 +83,17 @@ export class HistoryService {
     return true;
   }
 
+  /** Sets a temp object in history, used to pass data when naviagting. */
   setLatestHistory(obj: any) {
     this.latest = { ...obj };
   }
 
+  /** Retrieves the temp object most recently stored. */
   getLatestHistory(): any {
     return this.latest;
   }
 
+  /** Creates an object containing relevant data from the favorited books */
   updateBooks(): any {
     let obj = {};
     for (const key of this.savedBooks.keys()) {
@@ -97,6 +105,7 @@ export class HistoryService {
     return obj;
   }
 
+  /** Creates an object containing relevant data from the favorited authors */
   updateAuthors(): any {
     let obj = {};
     for (const key of this.savedAuthors.keys()) {
@@ -108,34 +117,40 @@ export class HistoryService {
     return obj;
   }
 
+  /** Saves the book in the favorites and in the database. */
   saveBook(book: BookDetail): void {
     this.savedBooks.set(book.key, book);
     this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
     Storage.set({ key: 'books', value: JSON.stringify(this.updateBooks()) });
   }
 
+  /** Saves the author in the favorites and in the database */
   saveAuthor(author: AuthorInfo): void {
     this.savedAuthors.set(author.key, author);
     this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
     Storage.set({ key: 'authors', value: JSON.stringify(this.updateAuthors()) });
   }
 
+  /** Removes a book from the favorites and from the database. */
   removeBook(key: string): void {
     this.savedBooks.delete(key);
     this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
     Storage.set({ key: 'books', value: JSON.stringify(this.updateBooks()) });
   }
   
+  /** Removes an author from the favorites in app and in the database */
   removeAuthor(key: string): void {
     this.savedAuthors.delete(key);
     this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
     Storage.set({ key: 'authors', value: JSON.stringify(this.updateAuthors()) });
   }
 
+  /** Returns an observable of books */
   getBooks(): BehaviorSubject<BookDetail[]> {
     return this.savedBooksSubject;
   }
 
+  /** Returns an observable of authors */
   getAuthors(): BehaviorSubject<AuthorInfo[]> {
     return this.savedAuthorsSubject;
   }
@@ -148,6 +163,10 @@ export class HistoryService {
     return this.savedAuthors.has(key);
   }
 
+  /** Adds any object to cache. Must have a key attribute. Cache stores a 
+   * limit of 20 objects. Oldest objects are removed if a new object is added 
+   * and the cache is full. 
+   */
   addToCache(obj: any) {
     let found: boolean = false;
     let foundIdx: number = -1;
@@ -169,6 +188,7 @@ export class HistoryService {
     }
   }
 
+  /** Gets a cahced object with the given key, returns null if not found. */
   getCache(key: string): any {
     let res = null;
 

@@ -1,7 +1,15 @@
 {
   "name": "Book Search App",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "enterprise": {
+      "keyId": 5265,
+      "productKey": "key_1ce513d00093495d935430a05b6d8cc6",
+      "appId": "a55d87dd",
+      "registries": [
+        "@ionic-enterprise;https://registry.ionicframework.com/"
+      ]
+    }
   },
   "type": "angular"
 }

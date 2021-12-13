@@ -23,7 +23,9 @@ export class HomePage {
   bookResults: any[] = [];
   authorResults: any[] = [];
 
-  constructor(private network: NetworkingService, private his: HistoryService) {}
+  constructor(private network: NetworkingService, private his: HistoryService) {
+    
+  }
 
   ngOnInit(): void {
     

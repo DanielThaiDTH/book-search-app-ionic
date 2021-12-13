@@ -3,6 +3,8 @@ import { BookDetail } from './Models/BookDetail';
 import { AuthorInfo } from './Models/AuthorInfo';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { Storage } from '@capacitor/storage';
+// import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +25,57 @@ export class HistoryService {
     this.savedAuthors = new Map<string, AuthorInfo>();
   }
 
-  init(): void {
+  async init() {
+    {
+      const { value } = await Storage.get( {key: 'books'} );
+      
+      if (value && Object.keys(JSON.parse(value)).length > 0) {
+        // let keys = Object.keys(value);
+        // keys.forEach(k => this.savedBooks.set(k, value[k]));
+        let obj = JSON.parse(value);
+        let keys = Object.keys(obj);
+        keys.forEach(k => {
+          let b: BookDetail = new BookDetail();
+          let bkeys = Object.keys(obj[k]);
+          bkeys.forEach(bk => {
+            if (bk === 'addTime') {
+              b[bk] = new Date(obj[k][bk]);
+            } else {
+              b[bk] = obj[k][bk];
+            }
+          });
+          this.savedBooks.set(k, b);
+        });
+        let arr = Array.from(this.savedBooks.values());
+         if (Array.isArray(arr))
+           this.savedBooksSubject.next(arr);
+      }
+    }
 
+    {
+      const { value } = await Storage.get({ key: 'authors' });
+      if (value && Object.keys(JSON.parse(value)).length > 0) {
+        let obj = JSON.parse(value);
+        let keys = Object.keys(obj);
+        keys.forEach(k => {
+          let a: AuthorInfo = new AuthorInfo();
+          let akeys = Object.keys(obj[k]);
+          akeys.forEach(ak => {
+            if (ak === 'addTime') {
+              a[ak] = new Date(obj[k][ak]); //Date needs special handling
+            } else {
+              a[ak] = obj[k][ak];
+            }
+          });
+          this.savedAuthors.set(k, a);
+        });
+        let arr = Array.from(this.savedAuthors.values());
+        if (Array.isArray(arr))
+          this.savedAuthorsSubject.next(arr);
+      }
+    }
+
+    return true;
   }
 
   setLatestHistory(obj: any) {
@@ -35,24 +86,50 @@ export class HistoryService {
     return this.latest;
   }
 
+  updateBooks(): any {
+    let obj = {};
+    for (const key of this.savedBooks.keys()) {
+      obj[key] = this.savedBooks.get(key);
+    }
+
+    console.log(obj);
+
+    return obj;
+  }
+
+  updateAuthors(): any {
+    let obj = {};
+    for (const key of this.savedAuthors.keys()) {
+      obj[key] = this.savedAuthors.get(key);
+    }
+
+    console.log(obj);
+
+    return obj;
+  }
+
   saveBook(book: BookDetail): void {
     this.savedBooks.set(book.key, book);
     this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
+    Storage.set({ key: 'books', value: JSON.stringify(this.updateBooks()) });
   }
 
   saveAuthor(author: AuthorInfo): void {
     this.savedAuthors.set(author.key, author);
     this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
+    Storage.set({ key: 'authors', value: JSON.stringify(this.updateAuthors()) });
   }
 
   removeBook(key: string): void {
     this.savedBooks.delete(key);
     this.savedBooksSubject.next(Array.from(this.savedBooks.values()));
+    Storage.set({ key: 'books', value: JSON.stringify(this.updateBooks()) });
   }
   
   removeAuthor(key: string): void {
     this.savedAuthors.delete(key);
     this.savedAuthorsSubject.next(Array.from(this.savedAuthors.values()));
+    Storage.set({ key: 'authors', value: JSON.stringify(this.updateAuthors()) });
   }
 
   getBooks(): BehaviorSubject<BookDetail[]> {
